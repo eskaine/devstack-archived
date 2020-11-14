@@ -20,9 +20,9 @@ export default function ButtonAppBar() {
 					<Typography variant="h6" className={classes.title}><NavLink to="/" linkName="DEVSTACK" />
             
 					</Typography>
-					<Button color="inherit" variant="outlined"><NavLink to="/register" linkName="Register" />
+					<Button color="inherit" variant="outlined"><NavLink to="/register" linkName="Sign Up" />
 					</Button>
-					<Button color="inherit" variant="outlined">Login</Button>
+					<Button color="inherit" variant="text">Sign In</Button>
 					
 				</Toolbar>
 			</Container>

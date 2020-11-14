@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Tabs, Tab } from "@material-ui/core";
+import { Tabs, Tab, Box} from "@material-ui/core";
 import GoogleButton from "react-google-button";
 import axios from "axios";
 import { withContainer } from "./styledComponents/withStyles";
@@ -9,16 +9,16 @@ import TabPanel from "./components/TabPanel";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-// 	// flexGrow: 1,
-// 	border: "1px solid red",
-//     backgroundColor: theme.palette.background.paper,
-//   },
-// }));
+const useStyles = makeStyles((theme) => ({
+	registerContainer: {
+	position: "absolute",
+	right: 0,
+	width: "40%",
+  },
+}));
 
 function Register() {
-  //   const classes = useStyles();
+    const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const [form, setForm] = useState({
@@ -62,19 +62,27 @@ function Register() {
 
   return withContainer(
     <Fragment>
-      <Tabs value={value} onChange={handleTabChange}>
+		<Box className={classes.registerContainer}>
+
+		
+      <Tabs variant="fullWidth" value={value} onChange={handleTabChange}>
         <Tab label="Individual" />
         <Tab label="Organization" />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <SignUpForm
+        <Box>
+		<SignUpForm
           labelname="Username"
           {...form}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
         />
 
+		<Box>
+
         <GoogleButton type="light" />
+		</Box>
+		</Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <SignUpForm
@@ -83,7 +91,7 @@ function Register() {
           handleChange={handleChange}
           handleSubmit={handleSubmit}
         />
-      </TabPanel>
+      </TabPanel></Box>
     </Fragment>
   );
 }

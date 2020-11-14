@@ -8,7 +8,7 @@ function withContainer(component) {
     
   return (
     <Box>
-      <Container className={baseStyles.mainPad}>{component}</Container>
+      <Container className={baseStyles.mainContainer}>{component}</Container>
     </Box>
   );
 }

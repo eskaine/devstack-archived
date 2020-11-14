@@ -5,7 +5,7 @@ import { Box } from "@material-ui/core";
 function TabPanel({ children, value, index }) {
   return (
     <Box role="tabpanel" hidden={value !== index}>
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box p={5}>{children}</Box>}
     </Box>
   );
 }

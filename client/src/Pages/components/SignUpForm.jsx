@@ -10,6 +10,7 @@ function SignUpForm({labelname, username, email, password, handleChange, handleS
         name="username"
         type="text"
         variant="outlined"
+        fullWidth={true}
         value={username}
         onChange={handleChange}
       />
@@ -21,6 +22,7 @@ function SignUpForm({labelname, username, email, password, handleChange, handleS
         name="email"
         type="email"
         variant="outlined"
+        fullWidth={true}
         value={email}
         onChange={handleChange}
       />
@@ -31,6 +33,7 @@ function SignUpForm({labelname, username, email, password, handleChange, handleS
         name="password"
         type="password"
         variant="outlined"
+        fullWidth={true}
         autoComplete="current-password"
         value={password}
         onChange={handleChange}
@@ -38,6 +41,7 @@ function SignUpForm({labelname, username, email, password, handleChange, handleS
       <br />
       <Button
         variant="contained"
+        fullWidth={true}
         color="primary"
         size="large"
         onClick={handleSubmit}
