@@ -5,18 +5,20 @@ import { BrowserRouter } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import App from "./components/App";
 import configureStore, { history } from "./store";
+import "./styles/styles.scss";
+
 
 const store = configureStore();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById("root")
+	<React.StrictMode>
+		<BrowserRouter>
+			<Provider store={store}>
+				<ConnectedRouter history={history}>
+					<App />
+				</ConnectedRouter>
+			</Provider>
+		</BrowserRouter>
+	</React.StrictMode>,
+	document.getElementById("root")
 );

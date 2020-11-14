@@ -5,11 +5,11 @@ import { createBrowserHistory } from "history";
 import rootReducer from "./reducers/rootReducer";
 
 function configureStore(preloadedState) {
-  return createStore(
-    rootReducer(history),
-    preloadedState,
-    compose(applyMiddleware(thunk, routerMiddleware(history)))
-  );
+	return createStore(
+		rootReducer(history),
+		preloadedState,
+		compose(applyMiddleware(thunk, routerMiddleware(history)))
+	);
 }
 
 export const history = createBrowserHistory();

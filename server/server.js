@@ -1,24 +1,19 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 
-// mongoose.connect(process.env.MONGODB, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   }, (err) => {
-//     console.log("MongoDB connected...");
-// });
+require("./config/mongo.config");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(express.json());
+app.use(cors());
 
-app.get("/", (req, res) => {
-  console.log("initial");
-  res.send("initial route");
-});
+app.use("/", require("./routes/main.route"));
+app.use("/account", require("./routes/account.route"));
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server running on ${process.env.PORT}...`);
+	console.log(`Server running on ${process.env.PORT}...`);
 });
