@@ -9,14 +9,24 @@ const userSchema = new Schema({
 	username: { type: String, required: true },
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
-	firstname: String,
-	lastname: String,
+	// firstname: String,
+	// lastname: String,
 	profile: String,
 	about: String,
 	accountType: {
 		type: String,
 		enum: ["developer", "individual"],
 		default: "developer"
+	},
+	social: {
+		linkedin: {
+			type: String,
+			default: ''
+		},
+		github: {
+			type: String,
+			default: ''
+		}
 	},
 	teams: {
 		type: [{
@@ -33,6 +43,13 @@ const userSchema = new Schema({
 		default: []
 	},
 	projectsPosted: {
+		type: [{
+			type: Schema.Types.ObjectId,
+			ref: "Project",
+		}],
+		default: []
+	},
+	projectsArchived: {
 		type: [{
 			type: Schema.Types.ObjectId,
 			ref: "Project",
