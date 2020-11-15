@@ -12,7 +12,7 @@ const store = configureStore();
 
 ReactDOM.render(
 	<React.StrictMode>
-		<BrowserRouter>
+		<BrowserRouter basename="/">
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
 					<App />
