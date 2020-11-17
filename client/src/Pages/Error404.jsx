@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import { withContainer } from "./styledComponents/withStyles";
 
 function Error404() {
-  return withContainer(
+  return (
     <Fragment>
         <h1>Error 404</h1>
     </Fragment>

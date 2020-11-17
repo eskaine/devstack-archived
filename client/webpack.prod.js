@@ -6,7 +6,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
+
+
 
 module.exports = merge(config, {
   mode: "production",
@@ -41,6 +42,5 @@ module.exports = merge(config, {
       filename: "[name].[contenthash].css",
     }),
     new CleanWebpackPlugin(),
-    new Dotenv()
   ],
 });

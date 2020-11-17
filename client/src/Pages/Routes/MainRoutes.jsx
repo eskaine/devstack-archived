@@ -1,25 +1,28 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useParams } from "react-router-dom";
 import Home from "../Home";
-import User from "./UserRoute";
+import UserRoute from "./UserRoute";
 import Projects from "../Projects";
 import Register from "../Register";
 import Error404 from "../Error404";
+import OrgRoutes from "./OrgRoutes";
+import Organizations from "../Organizations";
+import Organization from "../Organization";
 
-
-import { Box, Container } from "@material-ui/core";
+import MainBox from "../styledComponents/MainBox";
 
 function MainContainer() {
-
+  // let name =
   return (
-        <Switch >
-          <Route exact path="/" component={Home} />
-          {/* change /user to username */}
-          <Route path="/user" component={User} />
-          <Route exact path="/projects" component={Projects} />
-          <Route exact path="/register" component={Register} />
-          <Route path="*" component={Error404} />
-        </Switch>
+    <MainBox>
+      <Switch>
+  <Route exact path="/" component={Home} />
+  <Route exact path="/register" component={Register} />
+  <Route exact path="/organizations" component={Organizations} />
+  <Route path="/organizations/:name" component={Organization} />
+  <Route path="*" component={Error404} />
+</Switch>
+    </MainBox>
   );
 }
 

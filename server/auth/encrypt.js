@@ -1,7 +1,9 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
-function hashPassword(password) {
-	return bcrypt.hashSync(password, process.env.SALT_ROUND);
+function hashPassword(user, password, next) {
+  if (!user.isModified("password")) return next();
+  user.password = bcrypt.hashSync(password, Number(process.env.SALT_ROUND));
+  next();
 }
 
-module.exports = {hashPassword};
+module.exports = { hashPassword };

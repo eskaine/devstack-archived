@@ -1,5 +1,9 @@
+const Dotenv = require("dotenv-webpack");
+
 module.exports = {
-    
+  output: {
+    publicPath: '/',
+  },
   resolve: {
     extensions: [".js", ".jsx"],
   },
@@ -25,4 +29,5 @@ module.exports = {
       
     ],
   },
+  plugins:[new Dotenv()]
 };

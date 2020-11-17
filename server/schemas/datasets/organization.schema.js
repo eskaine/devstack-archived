@@ -1,6 +1,7 @@
 const mongoose  = require('mongoose');
 const { Schema } = mongoose;
-const { uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
+const {hashPassword} = require("../../auth/encrypt");
 
 const organizationSchema = new Schema({
     _id: { type: String, default: uuidv4 },
@@ -18,8 +19,15 @@ const organizationSchema = new Schema({
    
 }, { timestamps: true });
 
+organizationSchema.pre("save", function (next) {
+	// var user = this;
+	hashPassword(this, this.password, next);
+	// if (!user.isModified("password")) return next();
+	// user.password = 
+	// next();
+  });
 
 
 const Organization = mongoose.model("Organization", organizationSchema);
 
-export default Organization;
+module.exports = Organization;

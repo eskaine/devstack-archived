@@ -58,18 +58,14 @@ const userSchema = new Schema({
 	}
 }, { timestamps: true });
 
-userSchema.pre("save", function (next) {
-	var user = this;
-    
-	if (!user.isModified("password")) return next();
-	//env salt
-	//var hash = bcrypt.hashSync(user.password, process.env.SALT_ROUND);
-	//user.password = hash;
 
-	user.password = hashPassword(user.password);
-    
-	next();
-});
+userSchema.pre("save", function (next) {
+	// var user = this;
+	hashPassword(this, this.password, next);
+	// if (!user.isModified("password")) return next();
+	// user.password = 
+	// next();
+  });
 
 const User = mongoose.model("User", userSchema);
 

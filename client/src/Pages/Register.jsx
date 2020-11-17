@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Tabs, Tab, Box} from "@material-ui/core";
+import React, { Fragment, useState } from "react";
+import { Tabs, Tab, Box } from "@material-ui/core";
 import GoogleButton from "react-google-button";
 import axios from "axios";
 import { withContainer } from "./styledComponents/withStyles";
@@ -9,89 +9,69 @@ import TabPanel from "./components/TabPanel";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 
+import withFormHandlers from "./components/withFormHandlers";
+
 const useStyles = makeStyles((theme) => ({
-	registerContainer: {
-	position: "absolute",
-	right: 0,
-	width: "40%",
+  registerContainer: {
+    position: "absolute",
+    right: 0,
+    width: "40%",
   },
 }));
 
 function Register() {
-    const classes = useStyles();
+  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [type, setType] = useState("individual");
 
-  function handleChange(e) {
-    let newForm = { ...form };
-    newForm[e.target.name] = e.target.value;
-    console.log("change", newForm);
-    setForm(newForm);
+  function handleTabChange(event, newValue) {
+    setValue(newValue);
+    setType(event.target.innerText.toLowerCase());
+  }
+
+  function createForm(labelname, accountType) {
+    return withFormHandlers(SignUpForm, {
+      labelname: labelname,
+      accountType: accountType,
+    });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("submit");
     try {
-      let { username, email, password } = form;
+      let { accountType, username, email, password } = form;
+      console.log("submit", `${process.env.REG}${accountType}`);
       if (username !== "" && email !== "" && password.length >= 8) {
-        let res = await axios.post(process.env.REG, form);
+        let res = await axios.post(`${process.env.REG}${accountType}`, form);
         console.log("axios res", res);
+        resetForm();
       }
     } catch (err) {
       throw new Error(err);
     }
   }
 
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  useEffect(() => {
-    setForm({
-      username: "",
-      email: "",
-      password: "",
-    });
-  }, [value]);
-
-  return withContainer(
+  return (
     <Fragment>
-		<Box className={classes.registerContainer}>
+      <Box className={classes.registerContainer}>
+        <Tabs variant="fullWidth" value={value} onChange={handleTabChange}>
+          <Tab label="Individual" />
+          <Tab label="Organization" />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <Box>
+            {createForm("Username", type)}
 
-		
-      <Tabs variant="fullWidth" value={value} onChange={handleTabChange}>
-        <Tab label="Individual" />
-        <Tab label="Organization" />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <Box>
-		<SignUpForm
-          labelname="Username"
-          {...form}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
-
-		<Box>
-
-        <GoogleButton type="light" />
-		</Box>
-		</Box>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <SignUpForm
-          labelname="Organization Name"
-          {...form}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
-      </TabPanel></Box>
+            <Box>
+              <GoogleButton type="light" />
+            </Box>
+          </Box>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {createForm("Organization Name", type)}
+        </TabPanel>
+      </Box>
     </Fragment>
   );
 }

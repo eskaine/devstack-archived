@@ -7,18 +7,19 @@ import App from "./Pages/App";
 import configureStore, { history } from "./store";
 import "./styles/styles.scss";
 
-
 const store = configureStore();
 
 ReactDOM.render(
-	<React.StrictMode>
-		<BrowserRouter basename="/">
-			<Provider store={store}>
-				<ConnectedRouter history={history}>
-					<App />
-				</ConnectedRouter>
-			</Provider>
-		</BrowserRouter>
-	</React.StrictMode>,
-	document.getElementById("root")
+  <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <App />,
+        </ConnectedRouter>
+      </Provider>
+    </BrowserRouter>
+    ,
+  </React.StrictMode>,
+
+  document.getElementById("root")
 );

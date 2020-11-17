@@ -1,42 +1,57 @@
 import React from "react";
+import { Formik } from "formik";
 import { Button, TextField } from "@material-ui/core";
 
-function SignUpForm({labelname, username, email, password, handleChange, handleSubmit}) {
+function SignUpForm(props) {
+  const { accountType, labelname, form } = props;
+
+  function submit() {
+    e.preventDefault();
+    form.values.accountType = accountType;
+    form.handleSubmit();
+  }
+
   return (
-    <form target="_self">
+    <form target="_self" onSubmit={submit}>
       <TextField
         id="username"
-        label={labelname}
         name="username"
+        label={labelname}
         type="text"
         variant="outlined"
         fullWidth={true}
-        value={username}
-        onChange={handleChange}
+        value={form.values.username}
+        onChange={form.handleChange}
+        error={formik.touched.username && Boolean(formik.errors.username)}
+        helperText={formik.touched.username && formik.errors.username}
       />
       <br />
 
       <TextField
         id="email"
-        label="Email"
         name="email"
+        label="Email"
         type="email"
         variant="outlined"
         fullWidth={true}
-        value={email}
-        onChange={handleChange}
+        value={form.values.email}
+        onChange={form.handleChange}
+        error={formik.touched.email && Boolean(formik.errors.email)}
+        helperText={formik.touched.email && formik.errors.email}
       />
       <br />
       <TextField
         id="password"
-        label="Password"
         name="password"
+        label="Password"
         type="password"
         variant="outlined"
         fullWidth={true}
         autoComplete="current-password"
-        value={password}
-        onChange={handleChange}
+        value={form.values.password}
+        onChange={form.handleChange}
+        error={formik.touched.password && Boolean(formik.errors.password)}
+        helperText={formik.touched.password && formik.errors.password}
       />
       <br />
       <Button
@@ -44,7 +59,7 @@ function SignUpForm({labelname, username, email, password, handleChange, handleS
         fullWidth={true}
         color="primary"
         size="large"
-        onClick={handleSubmit}
+        type="submit"
       >
         Register
       </Button>
