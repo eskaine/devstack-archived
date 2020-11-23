@@ -1,16 +1,12 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import { routerMiddleware } from "connected-react-router";
-import { createBrowserHistory } from "history";
-import rootReducer from "./reducers/rootReducer";
+import configureStore from './helpers/storeConfig';
+import { saveState, loadState } from "./helpers/localStorage";
 
-function configureStore(preloadedState) {
-	return createStore(
-		rootReducer(history),
-		preloadedState,
-		compose(applyMiddleware(thunk, routerMiddleware(history)))
-	);
-}
+// const persistedState = loadState();
+// //const persistedState = currentState ? currentState : ;
+const store = configureStore();
 
-export const history = createBrowserHistory();
-export default configureStore;
+// store.subscribe(() => {
+//     saveState(store.getState());
+// });
+
+export default store;

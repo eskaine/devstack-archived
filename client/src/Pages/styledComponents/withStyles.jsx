@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Container } from "@material-ui/core";
-import useStyles from "../../styles/base.style";
+import useStyles from "../../styles/base.styles";
 
 
 function withContainer(component) {

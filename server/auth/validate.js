@@ -1,6 +1,7 @@
 const validator = require("validator");
+const bcrypt = require("bcrypt");
 
-function checkuser () {
+function verifyUser () {
 	if(!req.user) {
 		res.direct("/auth/login");
 	} else {
@@ -8,7 +9,7 @@ function checkuser () {
 	}
 }
 
-function checkEmail(req, res, next) {
+function verifyEmail(req, res, next) {
 	if(!validator.isEmail(req.body.email)) {
 		// connect flash
 		res.status(401).send("Invalid Email!");
@@ -18,4 +19,8 @@ function checkEmail(req, res, next) {
 	}
 }
 
-module.exports = {checkuser, checkEmail};
+function verifyPassword(password, curPassword) {
+	return bcrypt.compare(password, curPassword);
+}
+
+module.exports = {verifyUser, verifyEmail, verifyPassword};

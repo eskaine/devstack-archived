@@ -1,32 +1,83 @@
-var passport = require("passport");
-var LocalStrategy = require("passport-local").Strategy;
+const passport = require("passport");
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+const LocalStrategy = require("passport-local").Strategy;
 const User = require("../schemas/datasets/user.schema");
+const Organization = require("../schemas/datasets/org.schema");
 
 passport.serializeUser(function (user, done) {
-	done(null, user.id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-	User.findById(id, function (err, user) {
-		done(err, user);
-	});
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
 });
 
 passport.use(
-	new LocalStrategy(function (email, password, done) {
-		User.findOne({ email: email }, function (err, user) {
-			if (err) {
-				return done(err);
-			}
-			if (!user) {
-				return done(null, false, { message: "Incorrect email." });
-			}
-			if (!user.validPassword(password)) {
-				return done(null, false, { message: "Incorrect password." });
-			}
-			return done(null, user);
-		});
-	})
+  "signup",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true,
+    },
+    async (req, email, password, done) => {
+      console.log(req.params);
+      try {
+        let newAccount;
+        if(req.params.accountType === "individual") {
+          newAccount = await User.create(req.body);
+        } else {
+          newAccount = await Organization.create(req.body);
+        }
+
+        return done(null, newAccount);
+      } catch (error) {
+        done(null, error);
+      }
+    }
+  )
+);
+
+passport.use(
+  "signin",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ email });
+        if (!user) return done(null, false);
+
+        const pass = await user.verifyPassword(password);
+        if (!pass) return done(null, false);
+
+        return done(null, user);
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
+
+passport.use(
+  new JwtStrategy(
+    {
+      secretOrKey: process.env.JWT_SECRET,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        return done(null, token);
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
 );
 
 module.exports = passport;

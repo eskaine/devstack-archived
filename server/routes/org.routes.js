@@ -1,16 +1,21 @@
 const router = require("express").Router();
-const Organization = require("../schemas/datasets/organization.schema");
+const Organization = require("../schemas/datasets/org.schema");
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   console.log("organization");
-	res.sendStatus(200);
+  try {
+    let orgList = await Organization.find();
+    res.status(200).json(orgList);
+  } catch(err) {
+    res.sendStatus(400);
+  }
 });
 
 router.get("/:id", async (req, res) => {
   try {
-    let organization = await Organization.findById(req.params.id);
-    res.status(200).json(organization);
-  } catch (error) {
+    let org = await Organization.findById(req.params.id);
+    res.status(200).json(org);
+  } catch (err) {
     res.sendStatus(400);
   }
 });

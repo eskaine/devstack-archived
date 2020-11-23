@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 function createToken(user) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN);
+    return jwt.sign(user, process.env.JWT_SECRET,{ expiresIn: 24 * 60 * 60 * 1000 });
 }
 
 function authenticateToken(req, res, next) {
+    //const token = req.header("Authorization");
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token === null) return res.sendStatus(401);
@@ -16,7 +17,21 @@ function authenticateToken(req, res, next) {
     });
 }
 
+
+// function getSignedToken(payload, cb) {
+//     jwt.sign(
+//           payload,
+//           process.env.SECRET,
+//           { expiresIn: 60 * 60 * 1000 },
+//           (err, token) => {
+//             if (err) throw err;
+//             cb(token);
+//           }
+//         );
+//   }
+
+
 module.exports = {
     createToken,
-    authenticateToken
+    authenticateToken,
 };

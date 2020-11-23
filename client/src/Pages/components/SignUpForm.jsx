@@ -1,11 +1,10 @@
 import React from "react";
-import { Formik } from "formik";
 import { Button, TextField } from "@material-ui/core";
 
 function SignUpForm(props) {
   const { accountType, labelname, form } = props;
 
-  function submit() {
+  function submit(e) {
     e.preventDefault();
     form.values.accountType = accountType;
     form.handleSubmit();
@@ -22,8 +21,8 @@ function SignUpForm(props) {
         fullWidth={true}
         value={form.values.username}
         onChange={form.handleChange}
-        error={formik.touched.username && Boolean(formik.errors.username)}
-        helperText={formik.touched.username && formik.errors.username}
+        error={form.touched.username && Boolean(form.errors.username)}
+        helperText={form.touched.username && form.errors.username}
       />
       <br />
 
@@ -36,8 +35,8 @@ function SignUpForm(props) {
         fullWidth={true}
         value={form.values.email}
         onChange={form.handleChange}
-        error={formik.touched.email && Boolean(formik.errors.email)}
-        helperText={formik.touched.email && formik.errors.email}
+        error={form.touched.email && Boolean(form.errors.email)}
+        helperText={form.touched.email && form.errors.email}
       />
       <br />
       <TextField
@@ -50,8 +49,8 @@ function SignUpForm(props) {
         autoComplete="current-password"
         value={form.values.password}
         onChange={form.handleChange}
-        error={formik.touched.password && Boolean(formik.errors.password)}
-        helperText={formik.touched.password && formik.errors.password}
+        error={form.touched.password && Boolean(form.errors.password)}
+        helperText={form.touched.password && form.errors.password}
       />
       <br />
       <Button

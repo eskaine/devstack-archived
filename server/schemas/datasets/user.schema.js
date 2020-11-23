@@ -2,6 +2,7 @@ const mongoose  = require("mongoose");
 const { Schema } = mongoose;
 const { v4: uuidv4 } = require("uuid");
 const {hashPassword} = require("../../auth/encrypt");
+const {verifyPassword} = require("../../auth/validate");
 
 const userSchema = new Schema({
 	// uuid
@@ -60,12 +61,14 @@ const userSchema = new Schema({
 
 
 userSchema.pre("save", function (next) {
-	// var user = this;
 	hashPassword(this, this.password, next);
-	// if (!user.isModified("password")) return next();
-	// user.password = 
-	// next();
   });
+
+  userSchema.methods.verifyPassword = async function (password) {
+	const isValid = await verifyPassword(password, this.password);
+
+	return isValid;
+  };
 
 const User = mongoose.model("User", userSchema);
 

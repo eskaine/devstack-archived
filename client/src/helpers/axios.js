@@ -8,9 +8,10 @@ async function fetch(url, callback) {
     }
 }
 
-async function post(url, data) {
+async function post(url, data, callback) {
     try {
         let res = await axios.post(url, data);
+        callback(res);
 
     } catch(err) {
         console.error(err);
