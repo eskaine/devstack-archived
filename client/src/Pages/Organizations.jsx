@@ -1,32 +1,52 @@
-import React, { useEffect } from "react";
-import {useRouteMatch, Switch, Route, useParams} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useRouteMatch, Switch, Route, useParams } from "react-router-dom";
 import Organization from "./Organization";
-import axios from 'axios';
+import OrgCard from "./styledComponents/OrgCard";
+import Container from "@material-ui/core/Container";
+import { useQuery, gql } from "@apollo/client";
+
+const fetchOrgs = gql`
+  query {
+    getOrgs {
+      username
+    }
+  }
+`;
 
 function Organizations() {
-    let { path, url } = useRouteMatch();
+  const { loading, err, data } = useQuery(fetchOrgs);
+  console.log('loading', loading);
+      console.log('err', err);
 
+  const [list, setList] = useState([]);
+  
+  let { path, url } = useRouteMatch();
 
-    async function fetch() {
-      console.log('fetching', process.env);
-      try {
+  function showList() {
+    return list.map((org, i) => {
+      return <OrgCard key={i} {...org} />;
+    });
+  }
 
-        let res = await axios.get(process.env.ORG);
-        console.log('org fetc', res);
-      } catch(error) {
-        
-      }
+  async function gqlFetch() {
+    if(data) {
+      setList(data.getOrgs);
+      console.log('udne')
     }
+  }
 
-    useEffect(() =>{
-      fetch();
-    }, []);
+ 
+
+  useEffect(() => {
+    gqlFetch();
+
+  }, [data]);
 
   return (
-    <div>
-        <h1>orgniazations</h1>
-      
-    </div>
+    <Container>
+      <h1>orgniazations</h1>
+      {showList()}
+    </Container>
   );
 }
 

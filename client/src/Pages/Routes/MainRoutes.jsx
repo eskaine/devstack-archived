@@ -12,19 +12,19 @@ import UserSettings from "../Protected/UserSettings";
 
 import MainBox from "../styledComponents/MainBox";
 
-function MainContainer({auth}) {
+function MainContainer({ auth }) {
   return (
     <MainBox>
       <Switch>
-  <Route exact path="/">
-    <Home auth={auth} />
-    </Route> 
-  <Route exact path="/register" component={Register} />
-  <Route exact path="/organizations" component={Organizations} />
-  <Route path="/organizations/:name" component={Organization} />
-  {auth && <Route exact path="/settings" component={UserSettings} />}
-  <Route path="*" component={Error404} />
-</Switch>
+        <Route exact path="/">
+          <Home auth={auth} />
+        </Route>
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/organizations" component={Organizations} />
+        <Route path="/organizations/:name" component={Organization} />
+        {auth && <Route exact path="/settings" component={UserSettings} />}
+        <Route path="*" component={Error404} />
+      </Switch>
     </MainBox>
   );
 }

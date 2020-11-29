@@ -1,8 +1,8 @@
 const mongoose  = require("mongoose");
 const { Schema } = mongoose;
 const { v4: uuidv4 } = require("uuid");
-const {hashPassword} = require("../../auth/encrypt");
-const {verifyPassword} = require("../../auth/validate");
+const { hashPassword } = require("../../util/encrypt");
+const { verifyPassword } = require("../../util/validate");
 
 const userSchema = new Schema({
 	// uuid
