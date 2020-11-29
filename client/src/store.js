@@ -1,5 +1,4 @@
-import configureStore from './helpers/storeConfig';
-import { saveState, loadState } from "./helpers/localStorage";
+import configureStore from './config/store.config';
 
 // const persistedState = loadState();
 // //const persistedState = currentState ? currentState : ;
