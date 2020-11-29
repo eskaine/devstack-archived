@@ -13,7 +13,10 @@ const quries = gql`
       email: String!
       password: String!
   }
-  input UserRegister {
+  type Token {
+      token: String!
+  }
+  input UserInputData {
     username: String!
     email: String!
     password: String!
@@ -22,7 +25,7 @@ const quries = gql`
     getOrgs: [Organization]
   }
   type Mutation {
-    register(userRegister: UserRegister): User!
+    userRegister(userInputData: UserInputData): Token!
   }
 `;
 

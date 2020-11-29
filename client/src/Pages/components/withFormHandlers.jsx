@@ -2,30 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { useFormik } from "formik";
 import registerSchema from "../../schemas/form.schema";
-import axios from "../../helpers/axios";
 import { gql, useMutation } from "@apollo/client";
 
-// const CREATE_NEW_USER = gql`
-//   mutation createUser($username: String!, $email: String!, $password: String!) {
-//     register(username: $username, email: $email, password: $password) {
-//       id
-//     }
-//   }
-// `;
-
 const CREATE_NEW_USER = gql`
-  mutation createUser($username: String!, $email: String!, $password: String!) {
-    register(userRegister: {
-      username: $username, email: $email, password: $password
-  }){
-    id
-  }
+  mutation userRegister($username: String!, $email: String!, $password: String!) {
+    userRegister(
+      userInputData: { username: $username, email: $email, password: $password }
+    ) {
+      token
+    }
   }
 `;
 
-
 function withFormHandlers(Component, props) {
-  const [create, data] = useMutation(CREATE_NEW_USER);
+  const [userRegister, data] = useMutation(CREATE_NEW_USER);
 
   const form = useFormik({
     initialValues: {
@@ -34,18 +24,9 @@ function withFormHandlers(Component, props) {
       password: "",
     },
     registerSchema,
-    // onSubmit: ({accountType, username, email, password}) => {
-    //   axios.post(process.env.REG + accountType, {username, email, password},
-    //     (res) => {
-    //     console.log('res', form);
-        
-    //   });
-    // },
-    onSubmit: async ({accountType, username, email, password}) => {
-
-      // console.log('form data', username);
-      let res = await create({ variables: { username, email, password } });
-      console.log('res', res);
+    onSubmit: async ({ accountType, username, email, password }) => {
+      let res = await userRegister({ variables: { username, email, password } });
+      console.log("res", res);
       // input.value = "";
     },
   });
