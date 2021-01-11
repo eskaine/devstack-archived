@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import App from "./Pages/App";
 import store from "./store";
-import { history } from "./helpers/storeConfig";
+import { history } from "./config/store.config";
 import "./styles/styles.scss";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
