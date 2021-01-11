@@ -22,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
 
+  const navButton = (name, variant) => (
+    <Button color="inherit" variant={variant}>
+      {name}
+    </Button>
+  );
+
   return (
     <AppBar color="default">
       <Container>
@@ -38,12 +44,8 @@ export default function ButtonAppBar() {
             </Typography>
           </Box>
           <Box>
-            <Button color="inherit" variant="outlined">
-              <NavLink to="/register" linkName="Sign Up" />
-            </Button>
-            <Button color="inherit" variant="text">
-              Sign In
-            </Button>
+            <NavLink to="/register" linkName={navButton('Sign Up', 'outlined')} />
+            <NavLink to="/login" linkName={navButton('Sign In', 'text')} />
           </Box>
         </Toolbar>
       </Container>
